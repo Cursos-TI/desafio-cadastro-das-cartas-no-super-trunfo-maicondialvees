@@ -1,22 +1,77 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-// Desafio Super Trunfo - Países
-// Tema 1 - Cadastro das Cartas
-// Este código inicial serve como base para o desenvolvimento do sistema de cadastro de cartas de cidades.
-// Siga os comentários para implementar cada parte do desafio.
-//Teste larissa
+#define MAX_CARTAS 100
+
+typedef struct {
+    char nome[50];
+    int populacao;
+    float pib;
+    float area;
+} Carta;
+
+Carta cartas[MAX_CARTAS];
+int totalCartas = 0;
+
+void adicionar_carta() {
+    if (totalCartas >= MAX_CARTAS) {
+        printf("\nLimite de cartas atingido!\n");
+        return;
+    }
+    
+    printf("\nCadastro de nova carta:\n");
+    printf("Nome do país: ");
+    scanf(" %[^\n]s", cartas[totalCartas].nome);
+    printf("População (em milhões): ");
+    scanf("%d", &cartas[totalCartas].populacao);
+    printf("PIB (em trilhões de dólares): ");
+    scanf("%f", &cartas[totalCartas].pib);
+    printf("Área (em milhões de km²): ");
+    scanf("%f", &cartas[totalCartas].area);
+    
+    totalCartas++;
+    printf("\nCarta do país %s cadastrada com sucesso!\n", cartas[totalCartas - 1].nome);
+}
+
+void exibir_cartas() {
+    if (totalCartas == 0) {
+        printf("\nNenhuma carta cadastrada ainda!\n");
+        return;
+    }
+    
+    printf("\nCartas cadastradas:\n");
+    for (int i = 0; i < totalCartas; i++) {
+        printf("\nCarta %d:\n", i + 1);
+        printf("País: %s\n", cartas[i].nome);
+        printf("População: %d milhões\n", cartas[i].populacao);
+        printf("PIB: %.2f trilhões\n", cartas[i].pib);
+        printf("Área: %.2f milhões de km²\n", cartas[i].area);
+    }
+}
 
 int main() {
-    // Sugestão: Defina variáveis separadas para cada atributo da cidade.
-    // Exemplos de atributos: código da cidade, nome, população, área, PIB, número de pontos turísticos.
+    int escolha;
     
-    // Cadastro das Cartas:
-    // Sugestão: Utilize a função scanf para capturar as entradas do usuário para cada atributo.
-    // Solicite ao usuário que insira as informações de cada cidade, como o código, nome, população, área, etc.
-    
-    // Exibição dos Dados das Cartas:
-    // Sugestão: Utilize a função printf para exibir as informações das cartas cadastradas de forma clara e organizada.
-    // Exiba os valores inseridos para cada atributo da cidade, um por linha.
-
-    return 0;
+    while (1) {
+        printf("\n1 - Adicionar Carta\n");
+        printf("2 - Exibir Cartas\n");
+        printf("3 - Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &escolha);
+        
+        switch (escolha) {
+            case 1:
+                adicionar_carta();
+                break;
+            case 2:
+                exibir_cartas();
+                break;
+            case 3:
+                printf("Saindo do programa...\n");
+                return 0;
+            default:
+                printf("Opção inválida! Tente novamente.\n");
+        }
+    }
 }
